@@ -1,0 +1,40 @@
+Install Java
+sudo apt install openjdk-11-jre-headless
+java -version
+Set the JAVA_HOME environment variable. Open the ~/.bashrc file with a text editor like nano: 
+nano ~/.bashrc
+
+Add the following line to the end of the file, adjusting the path to match your installed Java version: 
+export JAVA_HOME="/usr/lib/jvm/java-21-openjdk-amd64"
+
+Save and exit the editor (Ctrl+O, Enter, Ctrl+X).
+
+Apply the changes by running: 
+source ~/.bashrc
+
+Download and Extract Kafka
+Download the Kafka binaries and extract them within your WSL file system.
+For example: wget https://dlcdn.apache.org/kafka/3.9.1/kafka_2.13-3.9.1.tgz
+
+Extract the downloaded file: 
+tar -xvzf kafka_2.13-3.9.1.tgz
+
+Start ZooKeeper and Kafka
+Open two separate WSL terminal windows. You will run ZooKeeper in one and Kafka in the other.
+
+In the first terminal, start the ZooKeeper server. Navigate to the Kafka directory and run the following command: 
+./kafka_2.13-3.9.1/bin/zookeeper-server-start.sh ./kafka_2.13-3.9.1/config/zookeeper.properties
+
+In the second terminal, start the Kafka server. After ZooKeeper is running, navigate to the Kafka directory and run: 
+./kafka_2.13-3.9.1/bin/kafka-server-start.sh ./kafka_2.13-3.9.1/config/server.properties
+
+Topic (can be in Producer)
+./kafka_2.13-3.9.1/bin/kafka-topics.sh --create --topic css182-2-topic --bootstrap-server localhost:9092
+
+Producer and Consumer
+./kafka_2.13-3.9.1/bin/kafka-console-producer.sh --topic css182-2-topic --bootstrap-server localhost:9092
+
+./kafka_2.13-3.9.1/bin/kafka-console-consumer.sh --topic css182-2-topic --from-beginning --bootstrap-server localhost:9092
+
+
+
